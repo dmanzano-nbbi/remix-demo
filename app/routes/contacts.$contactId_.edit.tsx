@@ -5,6 +5,7 @@ import type {
 import { json, redirect  } from "@remix-run/node";
 import {
   Form,
+  useActionData,
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
@@ -24,6 +25,26 @@ export const action = async ({ params, request, }: ActionFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
+  const person = {
+    first: String(formData.get("first")),
+    last: String(formData.get("last")),
+  };
+  const errors = { first: "", last: "", };
+
+  if (person.first.length === 0) {
+    errors.first = "First name is required";
+  }
+
+  if (person.last.length === 0) {
+    errors.last = "Last name is required";
+  }
+
+  if(Object.entries(errors).some(([k, v]) => (k !== "" && v !== ""))) {
+    console.log(errors);
+    return json({ errors });
+  }
+
+
   await updateContact(params.contactId, updates);
   return redirect(`/contacts/${params.contactId}`);
 };
@@ -31,6 +52,7 @@ export const action = async ({ params, request, }: ActionFunctionArgs) => {
 export default function EditContact() {
   const { contact } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
+  const actionData = useActionData<typeof action>();
 
   return (
     <Form key={contact.id} id="contact-form" method="post">
@@ -43,6 +65,7 @@ export default function EditContact() {
           type="text"
           placeholder="First"
         />
+        {actionData?.errors?.first && (<em>{actionData?.errors?.first}</em>)}
         <input
           aria-label="Last name"
           defaultValue={contact.last}
@@ -50,6 +73,7 @@ export default function EditContact() {
           placeholder="Last"
           type="text"
         />
+        {actionData?.errors?.last && (<em>{actionData?.errors?.last}</em>)}
       </p>
       <label>
         <span>Twitter</span>
