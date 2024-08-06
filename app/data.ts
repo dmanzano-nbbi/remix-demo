@@ -22,11 +22,19 @@ export type ContactRecord = ContactMutation & {
   createdAt: string;
 };
 
+export type ContactHistoryRecord = {
+  previous: ContactRecord | null,
+  current: ContactRecord | null,
+  eventType: string,
+  date: string,
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // This is just a fake DB table. In a real app you'd be talking to a real db or
 // fetching from an existing API.
 const fakeContacts = {
   records: {} as Record<string, ContactRecord>,
+  historyRecords: {} as Record<string, ContactHistoryRecord[]>,
 
   async getAll(): Promise<ContactRecord[]> {
     return Object.keys(fakeContacts.records)
@@ -43,6 +51,7 @@ const fakeContacts = {
     const createdAt = new Date().toISOString();
     const newContact = { id, createdAt, ...values };
     fakeContacts.records[id] = newContact;
+    fakeContacts.historyRecords[id] = [{ previous: null, current: newContact, date: createdAt, eventType: 'Created' }];
     return newContact;
   },
 
@@ -51,11 +60,16 @@ const fakeContacts = {
     invariant(contact, `No contact found for ${id}`);
     const updatedContact = { ...contact, ...values };
     fakeContacts.records[id] = updatedContact;
+    fakeContacts.historyRecords[id].push({ previous: contact, current: updatedContact, date: new Date().toISOString(), eventType: 'Updated' })
     return updatedContact;
   },
 
+  async getContactHistory(id: string): Promise<ContactHistoryRecord[]> {
+    return fakeContacts.historyRecords[id] || [];
+  },
   destroy(id: string): null {
     delete fakeContacts.records[id];
+    delete fakeContacts.historyRecords[id];
     return null;
   },
 };
@@ -89,6 +103,11 @@ export async function updateContact(id: string, updates: ContactMutation) {
   }
   await fakeContacts.set(id, { ...contact, ...updates });
   return contact;
+}
+
+export async function getContactHistory(id: string) {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  return await fakeContacts.getContactHistory(id);
 }
 
 export async function deleteContact(id: string) {
