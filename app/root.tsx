@@ -18,13 +18,13 @@ import type {
   LinksFunction,
   LoaderFunctionArgs
 } from "@remix-run/node";
-import appStylesHref from "./app.css?url";
+import styles from "./styles/app.css";
 import { createEmptyContact, getContacts  } from "./data";
 
 export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
-    href: appStylesHref
+    href: styles
   },
 ];
 

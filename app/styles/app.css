@@ -1,6 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html {
   box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
@@ -27,6 +32,7 @@ body {
   line-height: 1.5;
   color: #121212;
 }
+
 textarea,
 input,
 button {
@@ -40,6 +46,7 @@ button {
   line-height: 1.5;
   margin: 0;
 }
+
 button {
   color: #3992ff;
   font-weight: 500;
@@ -61,20 +68,24 @@ button:active {
   align-items: flex-start;
   gap: 1rem;
 }
+
 #contact h1 form {
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
 }
+
 #contact h1 form button {
   box-shadow: none;
   font-size: 1.5rem;
   font-weight: 400;
   padding: 0;
 }
+
 #contact h1 form button[value="true"] {
   color: #a4a4a4;
 }
+
 #contact h1 form button[value="true"]:hover,
 #contact h1 form button[value="false"] {
   color: #eeb004;
@@ -176,6 +187,7 @@ body {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -191,6 +203,7 @@ body {
   float: right;
   color: #eeb004;
 }
+
 #sidebar nav a.active span {
   color: inherit;
 }
@@ -198,6 +211,7 @@ body {
 i {
   color: #818181;
 }
+
 #sidebar nav .active i {
   color: inherit;
 }
@@ -217,7 +231,6 @@ i {
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-
   white-space: pre;
   padding: 0.5rem;
   border-radius: 8px;
@@ -245,9 +258,11 @@ i {
   0% {
     background: #e3e3e3;
   }
+
   50% {
     background: hsla(224, 98%, 58%, 0.5);
   }
+
   100% {
     background: #e3e3e3;
   }
@@ -296,6 +311,7 @@ i {
   color: #3992ff;
   text-decoration: none;
 }
+
 #contact a[href*="twitter"]:hover {
   text-decoration: underline;
 }
@@ -306,6 +322,7 @@ i {
   background: #c8c8c8;
   margin-right: 2rem;
   border-radius: 1.5rem;
+  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -321,21 +338,26 @@ i {
   flex-direction: column;
   gap: 1rem;
 }
+
 #contact-form > p:first-child {
   margin: 0;
   padding: 0;
 }
+
 #contact-form > p:first-child > :nth-child(2) {
   margin-right: 1rem;
 }
+
 #contact-form > p:first-child,
 #contact-form label {
   display: flex;
 }
+
 #contact-form p:first-child span,
 #contact-form label span {
   width: 8rem;
 }
+
 #contact-form p:first-child input,
 #contact-form label input,
 #contact-form label textarea {
