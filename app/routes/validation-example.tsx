@@ -7,10 +7,10 @@ import { makeDomainFunction } from 'domain-functions'
 import { formAction } from '~/formAction'
 
 const schema = z.object({
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    email: z.string().min(1).email(),
-    howYouFoundOutAboutUs: z.enum(['fromAFriend', 'google']),
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().min(1, "Email is required").email("Invalid email address"),
+    howYouFoundOutAboutUs: z.enum(['fromAFriend', 'google']).default('google'),
     notes: z.string().optional(),
 })
   
@@ -25,21 +25,21 @@ formAction({
 })
 
 export default function Component() {
-return (
-    <Form schema={schema}>
-        {({ Field, Errors, Button }) => (
-        <>
-            <Field name="firstName" />
-            <Field name="lastName" />
-            <Field name="email" />
-            <Field name="howYouFoundOutAboutUs" />
-            <Field name="notes" />
-            <Errors />
-            <div className="flex items-center space-x-4">
-            <Button />
-            </div>
-        </>
-        )}
-    </Form>
-)
+    return (
+        <Form schema={schema}>
+            {({ Field, Errors, Button }) => (
+            <>
+                <Field name="firstName" />
+                <Field name="lastName" />
+                <Field name="email" />
+                <Field name="howYouFoundOutAboutUs" />
+                <Field name="notes" />
+                <Errors />
+                <div className="flex items-center space-x-4">
+                <Button />
+                </div>
+            </>
+            )}
+        </Form>
+    )
 }

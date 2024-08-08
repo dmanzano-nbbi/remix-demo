@@ -121,6 +121,9 @@ export default function App() {
                   ))}
                 </ul>
             )}
+            <Link to={`validation-example`}>
+              Remix Forms Validation Example
+            </Link>
           </nav>
         </div>
         <div id='detail' className={ navigation.state === 'loading' && !searching ? 'loading' : ''}>
