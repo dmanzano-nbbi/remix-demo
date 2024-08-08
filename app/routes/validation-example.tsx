@@ -21,7 +21,7 @@ formAction({
     request,
     schema,
     mutation,
-    successPath: '/success',
+    successPath: '/',
 })
 
 export default function Component() {
